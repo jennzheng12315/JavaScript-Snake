@@ -198,7 +198,7 @@ function gameOver() {
   fill("black");
   textSize(20);
   text("Game Over!", width / 2 - 20, height / 2);
-  text('Press space to restart', width / 2 - 20, height / 2 + 20);
+  text('Refresh to restart', width / 2 - 20, height / 2 + 20);
   textSize(13);
 }
 
