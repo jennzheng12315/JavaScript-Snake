@@ -1,27 +1,3 @@
-/* ____    ___       _      _       ____  
-  / ___|  / _ \     / \    | |     / ___| 
- | |  _  | | | |   / _ \   | |     \___ \ 
- | |_| | | |_| |  / ___ \  | |___   ___) |
-  \____|  \___/  /_/   \_\ |_____| |____/ 
-                       
-1) 
-
-  ____    _____   ____    _____   _____    ____   _   _ 
- / ___|  |_   _| |  _ \  | ____| |_   _|  / ___| | | | |
- \___ \    | |   | |_) | |  _|     | |   | |     | |_| |
-  ___) |   | |   |  _ <  | |___    | |   | |___  |  _  |
- |____/    |_|   |_| \_\ |_____|   |_|    \____| |_| |_|
-
-1) Have the frame rate go up slowly, increasing the speed the more apples you collect.
-2) Make it possible to lose lives by hitting the walls.
-3) Have obstacles occasionally show up. If you hit one, you die.
-4) Add power-ups.
-5) Add color to the tail in some creative way.
-6) Put Apples on a timer, and have them expire after a certain amount of time.
-7) Color code the Apples, and make each color worth a different point value.
-
-*/
-
 // Name any p5.js functions we use in the global so Glitch can recognize them.
 /* global
  *    createCanvas, background
@@ -42,6 +18,7 @@ function setup() {
   createCanvas(400, 400);
   colorMode(HSB, 360, 100, 100);
   backgroundColor = 95;
+  
   fRate = 12;
   playerSnake = new Snake();
   currentApple = new Apple();
@@ -53,6 +30,7 @@ function setup() {
 function draw() {
   background(backgroundColor);
   frameRate(fRate);
+  
   // The snake performs the following four methods:
   if (!gameIsOver) {
     playerSnake.moveSelf();
@@ -60,8 +38,9 @@ function draw() {
     playerSnake.checkCollisions();
     playerSnake.checkApples();
   }
-  // The apple needs fewer methods to show up on screen.
+  
   currentApple.showSelf();
+  
   // We put the score in its own function for readability.
   displayScore();
   checkLives();
@@ -69,11 +48,9 @@ function draw() {
     gameOver();
   }
   
-
 }
 
 function displayScore() {
-  console.log("displaying score");
   fill("green");
   text(`Score: ${score}`, 10, 20);
   text(`Lives: ${lives}`, 10, 40);
@@ -113,7 +90,8 @@ class Snake {
       } else {
         console.log("Error: invalid direction");
       }
-
+      
+      //if snake hits the edge of the canvas
       if (this.x < 0 || this.x > width || this.y < 0 || this.y > height) {
         lives--;
         this.x = random(15, width - 15);
@@ -123,7 +101,6 @@ class Snake {
   }
 
   showSelf() {
-    // stroke(240, 100, 100);
     noStroke();
     fill(random(360), 100, 100);
     rect(this.x, this.y, this.size, this.size);
@@ -135,6 +112,7 @@ class Snake {
     }
   }
 
+//check if snake has collided with apple
   checkApples() {
     let snakeEatsApple = collideRectRect(
       this.x,
@@ -146,6 +124,7 @@ class Snake {
       currentApple.size,
       currentApple.size
     );
+    
     if (snakeEatsApple) {
       score++;
       fRate++;
@@ -154,6 +133,7 @@ class Snake {
     }
   }
 
+ //check if snake has collided with itself
   checkCollisions() {
     if (this.tail.length > 2) {
       for (let i = 1; i < this.tail.length; i++) {
@@ -200,7 +180,6 @@ class Apple {
 }
 
 function keyPressed() {
-  console.log("key pressed: ", keyCode);
   if (keyCode === UP_ARROW && playerSnake.direction != "S") {
     playerSnake.direction = "N";
   } else if (keyCode === DOWN_ARROW && playerSnake.direction != "N") {
@@ -209,20 +188,10 @@ function keyPressed() {
     playerSnake.direction = "E";
   } else if (keyCode === LEFT_ARROW && playerSnake.direction != "E") {
     playerSnake.direction = "W";
-  // } else if (key = ' '){
-  //   restartGame();
   } 
     else {
     console.log("wrong key");
   }
-}
-
-function restartGame() {
-  score = 0;
-  gameIsOver = false;
-  playerSnake = new Snake();
-  currentApple = new Apple();
-  loop();
 }
 
 function gameOver() {
