@@ -17,7 +17,7 @@ function setup() {
   // Canvas & color settings
   createCanvas(400, 400);
   colorMode(HSB, 360, 100, 100);
-  backgroundColor = 95;
+  backgroundColor = 0;
   
   fRate = 12;
   playerSnake = new Snake();
@@ -51,7 +51,7 @@ function draw() {
 }
 
 function displayScore() {
-  fill("green");
+  fill("white");
   text(`Score: ${score}`, 10, 20);
   text(`Lives: ${lives}`, 10, 40);
 }
@@ -195,10 +195,10 @@ function keyPressed() {
 }
 
 function gameOver() {
-  fill("black");
+  fill("white");
   textSize(20);
-  text("Game Over!", width / 2 - 20, height / 2);
-  text('Refresh to restart', width / 2 - 20, height / 2 + 20);
+  text("Game Over!", width / 2 - 60, height / 2);
+  text('Refresh to restart', width / 2 - 60, height / 2 + 20);
   textSize(13);
 }
 
